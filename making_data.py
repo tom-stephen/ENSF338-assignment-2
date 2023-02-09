@@ -2,7 +2,7 @@
 
 import json
 import random
-with open('testdata.json') as f:
+with open('ex2.json') as f:
     data = json.load(f)
 
 #randomly shuffle the data

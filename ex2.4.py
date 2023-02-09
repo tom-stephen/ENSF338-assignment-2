@@ -23,56 +23,58 @@ def func2(array, start, end):
         array[start], array[high] = array[high], array[start]
     return high
 
-
-## faster quick sort
 import random
-def quick_sort(arr):
-    if len(arr) <= 1:
-        return arr
-    pivot_index = random.randint(0, len(arr) - 1)
-    pivot = arr[pivot_index]
-    low = [x for x in arr if x < pivot]
-    high = [x for x in arr if x > pivot]
-    middle = [x for x in arr if x == pivot]
-    return quick_sort(low) + middle + quick_sort(high)
-
-
-## bonous insert sort
-def insertionSort(A, size):
-    i, key, j = 0, 0, 0
-    for i in range(size):
-        key = A[i]
-        j = i-1
-        while j >= 0 and A[j] > key:
-            A[j + 1] = A[j]
-            j = j - 1
-        A[j + 1] = key
-
+# quick sort using a random number as the pivot
+def quickSort(A, size):
+    if size <= 1:
+        return A
+    else:
+        pivot = random.randint(0, size)
+        A[0], A[pivot] = A[pivot], A[0]
+        i, key, j = 0, 0, 0
+        for i in range(size):
+            key = A[i]
+            j = i-1
+            while j >= 0 and A[j] > key:
+                A[j + 1] = A[j]
+                j = j - 1
+            A[j + 1] = key
+    # return A
 
 import json
 import time
 import matplotlib.pyplot as plt
-import numpy as np
 
+
+###################################################################
 ### test the QUICKSORT method with testdata.json
-with open('testdata.json') as f:
+with open('ex2.json','r') as f:
     data = json.load(f)
 
 n_values_1 = []
 quick_sort_times = []
+# new_data = []
 
 for n in data:
     n_values_1.append(len(n))
     start = time.time()
-    quick_sort(n)
+    # new = quickSort(n,len(n)-1)
+    quickSort(n,len(n)-1)
     end = time.time()
     quick_sort_times.append(end - start)
+    # new_data.append(new)
 
+#dump new data to json file
+# with open('test_dump.json', 'w') as f:
+#     json.dump(new_data, f)
+
+
+###################################################################
 ### test the ORIGINAL SORT method with testdata.json
 n_values_2 = []
 original_sort_times = []
 
-with open('testdata.json') as f:
+with open('ex2.json','r') as f:
     data_2 = json.load(f)
 
 for n in data_2:
@@ -82,11 +84,13 @@ for n in data_2:
     end = time.time()
     original_sort_times.append(end - start)
 
+
+###################################################################
 #print times
 print(quick_sort_times)
 print(original_sort_times)
-plt.plot(n_values_2, original_sort_times, label='original')
 plt.plot(n_values_1, quick_sort_times, label='quick sort')
+plt.plot(n_values_2, original_sort_times, label='original')
 plt.legend()
 plt.xlabel('n')
 plt.ylabel('Time (s)')

@@ -27,9 +27,8 @@ def func2(array, start, end):
 import json
 import time
 import matplotlib.pyplot as plt
-import numpy as np
 
-with open('testdata.json') as f:
+with open('ex2.json') as f:
     data = json.load(f)
 
 n_values = []
@@ -41,6 +40,8 @@ for n in data:
     func1(n, 0, len(n)-1)
     end = time.time()
     times.append(end - start)
+
+
 
 ########################################
 ## testing new data set ex2.5.json
